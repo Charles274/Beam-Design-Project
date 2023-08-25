@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <title>Beam Design</title>
+    <script src="./scripts/scripts.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <section id="input-parameters">
+        <h1>Input your design parameters</h1>
+        <form action="./index.html" method="post" id="form">
+          <fieldset>
+            <label for="type-of-beam"
+              ><span>Type of Beam:</span>
+              <select>
+                <option selected value="Simply Supported">
+                  Simply Supported
+                </option>
+                <option value="Continuous">Continuous</option>
+                <option value="Cantilever">Cantilever</option>
+              </select>
+            </label>
+            <label for="additional-dead-load">
+              <span
+                >Additional Dead Load without self-weight of beam (KN/m): </span
+              ><input
+                type="number"
+                min="0"
+                step="0.001"
+                name="additional-dead-load"
+                id="additional-dead-load"
+                value="5"
+                required
+            /></label>
+            <label for="imposed-load">
+              <span>Imposed Load (KN/m): </span
+              ><input
+                type="number"
+                min="0"
+                step="0.001"
+                name="imposed-load"
+                id="imposed-load"
+                value="5"
+                required
+            /></label>
+            <label for="beam-length">
+              <span>Length of Beam (m): </span
+              ><input
+                type="number"
+                min="0.5"
+                max="30"
+                step="0.001"
+                name="beam-length"
+                id="beam-length"
+                value="5"
+                required
+            /></label>
+            <label for="beam-width">
+              <span>Width of Beam (m): </span
+              ><input
+                type="number"
+                min="0.1"
+                max="30"
+                step="0.001"
+                name="beam-width"
+                id="beam-width"
+                value="0.25"
+                required
+            /></label>
+            <label for="beam-depth">
+              <span>Depth of Beam (m): </span
+              ><input
+                type="number"
+                min="0.1"
+                max="30"
+                step="0.001"
+                name="beam-depth"
+                id="beam-depth"
+                value="0.45"
+                required
+            /></label>
+            <label for="reinforcement-size">
+              <span>Preferred Size of Reinforcement (mm): </span>
+              <select id="reinforcement-size">
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option selected value="14">14</option>
+                <option value="16">16</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="32">32</option>
+                <option value="40">40</option>
+              </select>
+            </label>
+            <label for="concrete-strength"
+              ><span>Concrete-Class(N/mm<sup>2</sup>):</span>
+              <select name="" id="concrete-strength" class="">
+                <option value="15" id="C15">C15</option>
+                <option value="20" id="C20">C20</option>
+                <option selected value="25" id="C25">C25</option>
+                <option value="30" id="C30">C30</option>
+                <option value="37" id="C37">C37</option>
+              </select>
+            </label>
+            <label for="reinforcement-strength"
+              ><span>Reinforcement/Steel Grade(N/mm<sup>2</sup>):</span>
+              <select id="reinforcement-strength">
+                <option selected value="250 R">
+                  250 - Hot rolled mild steel [R]
+                </option>
+                <option value="460 Y">460 - High yield steel [Y]</option>
+                <option value="500 H">500 - High yield steel [H]</option>
+              </select>
+            </label>
+            <label for="cover"
+              ><span>Cover to reinforcement (mm):</span>
+              <select id="cover-to-reinforcement">
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option selected value="25">25</option>
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="70">70</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+            <button class="button">Design Beam</button>
+          </fieldset>
+        </form>
+      </section>
+      <section id="bending-design-results">
+        <h1>Bending Reinforcement Design</h1>
+        <fieldset>
+          <article>
+            <label class="beam-volume"
+              ><span>Beam Volume (m<sup>3</sup>):</span>
+              <span class="result beam-result" id="beam-volume-result"
+                >0.00</span
+              >
+            </label>
+            <label
+              ><span>Self Weight of Beam (KN/m):</span>
+              <span class="result" id="beam-weight-result">0.00</span>
+            </label>
+            <label
+              ><span>Total Ultimate load (KN/m):</span>
+              <span class="result" id="ultimate-load-result">0.00</span>
+            </label>
+            <label
+              ><span>Design Moment due to load (KNm):</span>
+              <span class="result" id="design-moment-result">0.00</span></label
+            >
+            <label
+              ><span>Effective depth (mm):</span>
+              <span class="result" id="effective-depth">0.00</span></label
+            >
+            <label
+              ><span>Ultimate Moment of Resistance of Beam (Mu):</span>
+              <span class="result" id="ultimate-moment-of-resistance"
+                >0.00</span
+              >
+            </label>
+            <label
+              ><span>Minimum Required Area of Reinforcement (As):</span
+              ><span class="result" id="area-of-reinforcement">0.00</span>
+            </label>
+            <label
+              ><span>Provide Reinforcement :</span>
+              <span class="result" id="provided-reinforcement">4R14</span>
+            </label>
+          </article>
+        </fieldset>
+      </section>
+      <section id="shear-design-results">
+        <h1>Shear Reinforcement Design</h1>
+        <fieldset>
+          <article>
+            <label
+              ><span>Shear Stress (N/mm<sup>2</sup>):</span>
+              <span class="result beam-result" id="shear-stress"
+                >0.00</span
+              >
+            </label>
+            <label
+              ><span>Design Concrete Shear Stress, ῡ (N/mm<sup>2</sup>):</span>
+              <span class="result beam-result" id="design-concrete-shear-stress"
+                >0.00</span
+              >
+            </label>
+            <label
+              ><span>Self Weight of Beam (KNm):</span>
+              <span class="result" id="beam-weight-result">0.00</span>
+            </label>
+            <label
+              ><span>Total Ultimate load (KN/m):</span>
+              <span class="result" id="ultimate-load-result">0.00</span>
+            </label>
+            <label
+              ><span>Design Moment due to load (KNm):</span>
+              <span class="result" id="design-moment-result">0.00</span></label
+            >
+            <label
+              ><span>Effective depth (mm):</span>
+              <span class="result" id="effective-depth">0.00</span></label
+            >
+            <label
+              ><span>Ultimate Moment of Resistance of Beam (Mu):</span>
+              <span class="result" id="ultimate-moment-of-resistance"
+                >0.00</span
+              >
+            </label>
+            <label
+              ><span>Minimum Required Area of Reinforcement (As):</span
+              ><span class="result" id="area-of-reinforcement">0.00</span>
+            </label>
+            <label
+              ><span>Provide Reinforcement:</span>
+              <span class="result" id="provided-reinforcement">4R14</span>
+            </label>
+          </article>
+        </fieldset>
+      </section>
+    </main>
+  </body>
+</html>
